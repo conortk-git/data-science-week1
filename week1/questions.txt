@@ -1,0 +1,1 @@
+one thing that confuses me is the commit cycle of git
