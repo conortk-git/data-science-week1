@@ -1,2 +1,7 @@
 so far ive learnt that git is painful and difficult to use.
 got tracks files and changes that occur.
+
+i want to remember that when using posit cloud i need to introduce myself each time:
+usethis::use_git_config(
++     user.name  = "conortk-git",
++     user.email = "ybz24cau@UEA.AC.UK")
