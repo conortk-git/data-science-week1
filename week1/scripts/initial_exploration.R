@@ -40,3 +40,22 @@ mosquito_egg_raw |>
 #   one of the rows (female 23) laid less eggs then was hatched 
 # - Any obvious problems?
 #   N/As, misspelt columns, collector names wrong, and what was mentioned in the thing that surprised me.
+
+
+mosquito_egg_raw |>
+  get_dupes()
+
+# Keep only unduplicated data with !
+mosquito_new <- mosquito_egg_raw |> 
+  filter(!duplicated(across(everything()))) 
+
+mosquito_new |>
+  get_dupes()  # checking the new data set for dupes
+
+# checking for and removing NAs
+mosquito_new |> 
+  filter(if_any(everything(), is.na))
+select(everything()) # selects all columns in order 
+
+mosquito_new <- mosquito_new |>
+  drop_na()
