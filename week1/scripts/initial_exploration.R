@@ -83,5 +83,22 @@ mosquito_new <- mosquito_new |> # mosquito_new |> will only show it, not remove 
 
 ## Spellings ###################################################################
 
+# checking for spelling inconsistency 
+mosquito_new |> distinct(collector,site,treatment)
+mosquito_new |> distinct(site)
+mosquito_new |> distinct(treatment)
 
-## Dates #######################################################################
+# removing the spelling inconsistency
+mosquito_new <- mosquito_new |>
+  mutate(collector = case_when(collector == "Smyth" ~ "Smith", collector == "Garci" ~ "Garcia",.default = as.character(collector)),
+         site = case_when(site == "Site C" ~ "Site_C", site == "Site-C" ~ "Site_C", site == "site_c" ~ "Site_C",
+                          site == "site_a" ~ "Site_A",site == "Site-A" ~ "Site_A",site == "Site A" ~ "Site_A",
+                          site == "site_b" ~ "Site_B",site == "Site-B" ~ "Site_B",site == "Site B" ~ "Site_B",.default = as.character(site)))
+
+mosquito_new <- mosquito_new |>
+  mutate(treatment = str_to_lower(treatment))
+
+# checking it has worked
+mosquito_new |> distinct(collector)
+mosquito_new |> distinct(site)
+mosquito_new |> distinct(treatment)
