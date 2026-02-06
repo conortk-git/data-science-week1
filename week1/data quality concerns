@@ -1,0 +1,16 @@
+1. NAs
+   using the drop_na command i removed all the NA values, i would have used a more specific column by column removal if i knew what data i was trying to observe
+   there is no point removing the data in a row where the data i need to use is fine and a not used variable is an NA
+   instead of drop_na() i could use drop_na("column")
+
+2. duplicates
+   used the get_dupes() to display the duped data and then filtered it out in the lines below, making the new data set.
+
+3. -ves where there shouldnt be e.g. -93 body mass - impossible values 
+   some mosquitp mass seems too low however it isnt -ve, so im not sure whether they should be removed or whether it should be kept
+  ive decided to remove the extreme low outliers in the low end.
+  
+4. inconsistent spellings
+
+
+5. dates are inconsistent 

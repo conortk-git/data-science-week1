@@ -8,6 +8,7 @@ library(here)
 library(naniar)
 library(janitor)
 library(skimr)
+
 # Load data ====
 mosquito_egg_raw <- read_csv(here("week1", "data", "mosquito_egg_data.csv"),
                              name_repair = janitor::make_clean_names)
@@ -42,6 +43,7 @@ mosquito_egg_raw |>
 #   N/As, misspelt columns, collector names wrong, and what was mentioned in the thing that surprised me.
 
 
+### Duplications ###############################################################
 mosquito_egg_raw |>
   get_dupes()
 
@@ -52,10 +54,34 @@ mosquito_new <- mosquito_egg_raw |>
 mosquito_new |>
   get_dupes()  # checking the new data set for dupes
 
-# checking for and removing NAs
+## NAs #########################################################################
 mosquito_new |> 
-  filter(if_any(everything(), is.na))
-select(everything()) # selects all columns in order 
+  filter(if_any(everything(), is.na)) # selects all columns in order for the NAs
 
 mosquito_new <- mosquito_new |>
   drop_na()
+
+## Numeric values #############################################################
+# Check ranges of all numeric variables at once
+mosquito_new |> 
+  summarise(across(where(is.numeric), 
+                   list(min = ~min(., na.rm = TRUE),
+                        max = ~max(., na.rm = TRUE))))
+
+mosquito_new |> ## tells me the same info for more specific columns rather than the whole data set 
+  summarise(
+    min_mass = min(body_mass_mg, na.rn = TRUE),
+    max_mass = max(body_mass_mg, na.rn = TRUE))
+
+# this tells me that there is -ve values in a column where there should only be positive values, one of these includes the body mass colum
+# next i need to remove the -ve data from these columns
+
+ 
+
+mosquito_new <- mosquito_new |> # mosquito_new |> will only show it, not remove the values
+  filter(body_mass_mg >= 10) # displays all +ve values
+
+## Spellings ###################################################################
+
+
+## Dates #######################################################################
